@@ -13,8 +13,12 @@ def fetch_carbon_data():
     # 2. 抓取環境部網頁 HTML
     url = "https://cfp.moenv.gov.tw/WebPage/WebSites/CoefficientDB.aspx"
     headers = {'User-Agent': 'Mozilla/5.0'}
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning) # 這行可以讓輸出的警告消失，畫面比較乾淨
-    response = requests.get(url, headers=headers, verify=False)
+   verify_ssl = os.getenv('VERIFY_SSL', 'true').lower() == 'true'
+
+    response = requests.get(
+        'https://cfp.moenv.gov.tw/WebPage/WebSites/CoefficientDB.aspx',
+        verify=verify_ssl
+    )
     response.encoding = 'utf-8' # 確保中文不亂碼
     
     soup = BeautifulSoup(response.text, 'html.parser')
