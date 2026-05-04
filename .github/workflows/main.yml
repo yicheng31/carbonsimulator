@@ -31,3 +31,7 @@ jobs:
           git add data.json
           git commit -m "Update carbon data: $(date)" || exit 0
           git push
+      - name: Update SSL certificates
+        run: |
+          python -m pip install --upgrade certifi
+          python -c "import certifi; print(certifi.where())"
